@@ -2,12 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Premium dark emerald-gold token system ─────────────────────── */
 :root {
-  color-scheme: light;
+  color-scheme: dark;
+
+  /* Backgrounds */
+  --cp-bg:           #080e1a;
+  --cp-surface:      #101726;
+  --cp-surface-2:    #1a2336;
+  --cp-surface-3:    #212d45;
+
+  /* Borders */
+  --cp-border:       rgba(255,255,255,0.07);
+  --cp-border-strong:rgba(255,255,255,0.13);
+
+  /* Text */
+  --cp-text:         #f1f5f9;
+  --cp-text-muted:   #64748b;
+  --cp-text-subtle:  #94a3b8;
+
+  /* Gold accent */
+  --cp-accent:       #e3b341;
+  --cp-accent-dim:   rgba(227,179,65,0.12);
+
+  /* Emerald primary */
+  --cp-primary:      #16a34a;
+  --cp-primary-dim:  rgba(22,163,74,0.15);
+  --cp-primary-hover:#15803d;
 }
 
-.dark {
-  color-scheme: dark;
+/* Light override — only if user explicitly toggles light */
+html.light {
+  color-scheme: light;
+  --cp-bg:           #f8fafc;
+  --cp-surface:      #ffffff;
+  --cp-surface-2:    #f1f5f9;
+  --cp-surface-3:    #e2e8f0;
+  --cp-border:       rgba(0,0,0,0.06);
+  --cp-border-strong:rgba(0,0,0,0.10);
+  --cp-text:         #0f172a;
+  --cp-text-muted:   #64748b;
+  --cp-text-subtle:  #94a3b8;
 }
 
 html {
@@ -16,14 +51,14 @@ html {
 
 body {
   margin: 0;
-  background: #f8fafc;
-  color: #0f172a;
+  background: var(--cp-bg);
+  color: var(--cp-text);
   transition: background-color 0.35s ease, color 0.35s ease;
 }
 
-.dark body {
-  background: #0f172a;
-  color: #f8fafc;
+/* Keep .dark Tailwind class working for the DarkModeProvider */
+.dark {
+  color-scheme: dark;
 }
 
 aside, header, footer, nav, section,
@@ -44,31 +79,42 @@ aside, header, footer, nav, section,
   animation: slide-up-fade 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* Glass utilities */
+/* ─── Glass utilities ────────────────────────────────────────────── */
 .glass {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.07);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 @supports not (backdrop-filter: blur(1px)) {
   .glass { background: #1e293b; }
 }
 
 .glass-dark {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.25);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 @supports not (backdrop-filter: blur(1px)) {
-  .glass-dark { background: #0f172a; }
+  .glass-dark { background: #080e1a; }
 }
 
+/* ─── Glow utilities ─────────────────────────────────────────────── */
 .glow-emerald {
   box-shadow: 0 0 60px rgba(16, 163, 74, 0.15);
 }
-
 .glow-emerald-strong {
   box-shadow: 0 0 80px rgba(16, 163, 74, 0.25), 0 0 160px rgba(16, 163, 74, 0.1);
+}
+.glow-gold {
+  box-shadow: 0 0 40px rgba(227, 179, 65, 0.15);
+}
+
+/* ─── Premium card shorthand ─────────────────────────────────────── */
+.cp-card {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border-strong);
+  border-radius: 2rem;
+  padding: 1.25rem;
 }

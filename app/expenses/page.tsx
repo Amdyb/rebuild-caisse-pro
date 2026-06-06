@@ -113,11 +113,11 @@ export default function ExpensesPage() {
           ].map((stat) => {
             const Icon = stat.icon
             return (
-              <div key={stat.label} className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+              <div key={stat.label} className="cp-card">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-xs font-black uppercase tracking-wide text-slate-400 dark:text-slate-500">{stat.label}</p>
-                    <p className="mt-2 text-2xl font-black text-slate-950 dark:text-white">{stat.value}</p>
+                    <p className="text-xs font-black uppercase tracking-wide text-[var(--cp-accent)]">{stat.label}</p>
+                    <p className="mt-2 text-2xl font-black text-[var(--cp-text)]">{stat.value}</p>
                   </div>
                   <div className={`rounded-2xl p-2.5 ${stat.bg}`}><Icon size={20} className={stat.color} /></div>
                 </div>

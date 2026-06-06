@@ -87,7 +87,7 @@ export default function UpgradePage() {
               <div className="mb-3 flex h-16 w-16 mx-auto items-center justify-center rounded-[2rem] bg-emerald-50 dark:bg-emerald-900/30">
                 <selectedPlan.icon size={28} className="text-emerald-600 dark:text-emerald-400" />
               </div>
-              <h2 className="text-xl font-black text-slate-950 dark:text-white">Plan {selectedPlan.name}</h2>
+              <h2 className="text-xl font-black text-[var(--cp-accent)]">Plan {selectedPlan.name}</h2>
               <p className="mt-1 text-3xl font-black text-emerald-600">{selectedPlan.price} CFA<span className="text-base font-bold text-slate-400">/mois</span></p>
             </div>
             <div className="mb-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-900 dark:bg-emerald-900/20">
@@ -116,13 +116,13 @@ export default function UpgradePage() {
 
         {/* Current plan */}
         {!loading && (
-          <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-100 dark:bg-slate-700">
+          <div className="flex items-center gap-3 rounded-2xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[var(--cp-surface-2)]">
               <Gift size={18} className="text-slate-500 dark:text-slate-400" />
             </div>
             <div>
-              <p className="text-xs font-black uppercase tracking-wide text-slate-400 dark:text-slate-500">Plan actuel</p>
-              <p className="font-black text-slate-950 capitalize dark:text-white">{currentPlan}</p>
+              <p className="text-xs font-black uppercase tracking-wide text-[var(--cp-accent)]">Plan actuel</p>
+              <p className="font-black text-[var(--cp-text)] capitalize">{currentPlan}</p>
             </div>
           </div>
         )}
@@ -134,26 +134,26 @@ export default function UpgradePage() {
             const isActive = currentPlan === plan.id
             const isDowngrade = PLAN_LEVELS[plan.id] < currentLevel
             return (
-              <div key={plan.id} className={`relative flex flex-col rounded-[2rem] border p-6 shadow-sm transition ${
+              <div key={plan.id} className={`relative flex flex-col rounded-[2rem] border p-6 transition ${
                 (plan as any).popular
-                  ? 'border-emerald-400 bg-emerald-50 shadow-emerald-100 dark:border-emerald-600 dark:bg-emerald-900/10'
-                  : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800'
+                  ? 'border-[var(--cp-accent)]/50 bg-[var(--cp-accent-dim)] shadow-[0_0_30px_rgba(227,179,65,0.1)]'
+                  : 'border-[var(--cp-border-strong)] bg-[var(--cp-surface)]'
               }`}>
                 {(plan as any).popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-emerald-600 px-4 py-1 text-xs font-black text-white shadow-md">
                     Populaire
                   </div>
                 )}
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-sm dark:bg-slate-700">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--cp-surface-2)]">
                   <Icon size={22} className="text-emerald-600 dark:text-emerald-400" />
                 </div>
-                <h3 className="text-xl font-black text-slate-950 dark:text-white">{plan.name}</h3>
-                <p className="mt-1 text-3xl font-black text-slate-950 dark:text-white">
+                <h3 className="text-xl font-black text-[var(--cp-accent)]">{plan.name}</h3>
+                <p className="mt-1 text-3xl font-black text-[var(--cp-text)]">
                   {plan.price} <span className="text-base font-bold text-slate-400">CFA/mois</span>
                 </p>
                 <ul className="mt-5 flex-1 space-y-2.5">
                   {plan.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2.5 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                    <li key={f} className="flex items-center gap-2.5 text-sm font-semibold text-[var(--cp-text-subtle)]">
                       <CheckCircle2 size={16} className="shrink-0 text-emerald-500" /> {f}
                     </li>
                   ))}
@@ -163,12 +163,12 @@ export default function UpgradePage() {
                   disabled={isActive || isDowngrade}
                   className={`mt-6 w-full rounded-2xl py-3.5 text-sm font-black transition ${
                     isActive
-                      ? 'bg-slate-100 text-slate-500 cursor-default dark:bg-slate-700 dark:text-slate-400'
+                      ? 'bg-[var(--cp-surface-2)] text-[var(--cp-text-muted)] cursor-default'
                       : isDowngrade
-                      ? 'bg-slate-100 text-slate-400 cursor-not-allowed dark:bg-slate-700'
+                      ? 'bg-[var(--cp-surface-2)] text-[var(--cp-text-muted)] cursor-not-allowed'
                       : (plan as any).popular
-                      ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/20 hover:bg-emerald-700'
-                      : 'border border-emerald-600 text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20'
+                      ? 'bg-[var(--cp-accent)] text-slate-950 font-black hover:opacity-90 shadow-lg shadow-[var(--cp-accent)]/20'
+                      : 'border border-emerald-500/50 text-emerald-400 hover:bg-[var(--cp-primary-dim)]'
                   }`}
                 >
                   {isActive ? 'Plan actuel' : isDowngrade ? 'Plan inférieur' : 'Choisir ce plan'}

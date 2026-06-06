@@ -282,11 +282,11 @@ export default function DashboardPage() {
             ].map((stat) => {
               const Icon = stat.icon
               return (
-                <div key={stat.label} className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+                <div key={stat.label} className="cp-card">
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-xs font-black uppercase tracking-wide text-slate-400 dark:text-slate-500">{stat.label}</p>
-                      <p className="mt-2 text-2xl font-black text-slate-950 dark:text-white">{stat.value}</p>
+                      <p className="text-xs font-black uppercase tracking-wide text-[var(--cp-accent)]">{stat.label}</p>
+                      <p className="mt-2 text-2xl font-black text-[var(--cp-text)]">{stat.value}</p>
                     </div>
                     <div className={`rounded-2xl p-2.5 ${stat.bg}`}>
                       <Icon size={20} className={stat.color} />
@@ -309,12 +309,12 @@ export default function DashboardPage() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="flex flex-col items-center gap-2 rounded-2xl border border-slate-200 bg-white p-3 text-center transition hover:scale-105 hover:shadow-md dark:border-slate-700 dark:bg-slate-800"
+                    className="flex flex-col items-center gap-2 flex flex-col items-center gap-2 rounded-2xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-3 text-center transition hover:scale-105 hover:shadow-md"
                   >
                     <div className={`rounded-xl p-2.5 ${link.color}`}>
                       <Icon size={18} />
                     </div>
-                    <span className="text-[10px] font-black text-slate-600 dark:text-slate-300">{link.label}</span>
+                    <span className="text-[10px] font-black text-[var(--cp-text-subtle)]">{link.label}</span>
                   </Link>
                 )
               })}
@@ -324,18 +324,18 @@ export default function DashboardPage() {
           {/* Plan & referral card */}
           <div className="grid gap-4 md:grid-cols-2">
             {/* Subscription card */}
-            <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+            <div className="cp-card">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs font-black uppercase tracking-wide text-slate-400 dark:text-slate-500">Abonnement actuel</p>
-                  <p className="mt-1 text-xl font-black text-slate-950 dark:text-white">Plan {PLAN_LABELS[plan] || plan}</p>
+                  <p className="text-xs font-black uppercase tracking-wide text-[var(--cp-accent)]">Abonnement actuel</p>
+                  <p className="mt-1 text-xl font-black text-[var(--cp-text)]">Plan {PLAN_LABELS[plan] || plan}</p>
                   {planIsActive && planDays !== null && (
-                    <p className="mt-1 text-sm font-semibold text-slate-500 dark:text-slate-400">
+                    <p className="mt-1 text-sm font-semibold text-[var(--cp-text-muted)]">
                       {planDays > 0 ? `${planDays} jours restants` : 'Expiré'}
                     </p>
                   )}
                   {!planIsActive && (
-                    <p className="mt-1 text-sm font-semibold text-slate-500 dark:text-slate-400">Fonctionnalités limitées</p>
+                    <p className="mt-1 text-sm font-semibold text-[var(--cp-text-muted)]">Fonctionnalités limitées</p>
                   )}
                 </div>
                 <CreditCard size={28} className="text-emerald-600 dark:text-emerald-400" />
@@ -350,12 +350,12 @@ export default function DashboardPage() {
             </div>
 
             {/* Referral card */}
-            <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+            <div className="cp-card">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs font-black uppercase tracking-wide text-slate-400 dark:text-slate-500">Parrainage</p>
-                  <p className="mt-1 text-xl font-black text-slate-950 dark:text-white">{referralCount} parrainé{referralCount !== 1 ? 's' : ''}</p>
-                  <p className="mt-1 text-sm font-semibold text-slate-500 dark:text-slate-400">
+                  <p className="text-xs font-black uppercase tracking-wide text-[var(--cp-accent)]">Parrainage</p>
+                  <p className="mt-1 text-xl font-black text-[var(--cp-text)]">{referralCount} parrainé{referralCount !== 1 ? 's' : ''}</p>
+                  <p className="mt-1 text-sm font-semibold text-[var(--cp-text-muted)]">
                     {rewardCount} mois offert{rewardCount !== 1 ? 's' : ''} gagnés
                   </p>
                 </div>
@@ -363,7 +363,7 @@ export default function DashboardPage() {
               </div>
               <Link
                 href="/referrals"
-                className="mt-4 flex items-center justify-center gap-2 rounded-2xl border border-slate-200 py-3 text-sm font-black text-slate-600 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700"
+                className="mt-4 flex items-center justify-center gap-2 rounded-2xl border border-[var(--cp-border-strong)] py-3 text-sm font-black text-[var(--cp-text-subtle)] transition hover:bg-[var(--cp-surface-2)]"
               >
                 Inviter des amis
                 <ArrowRight size={16} />

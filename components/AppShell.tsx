@@ -397,27 +397,27 @@ const AppShell = memo(function AppShell({ children, title, subtitle, action }: A
   const sidebarContent = (
     <div className="flex h-full flex-col">
       {/* Business header */}
-      <div className="flex items-center gap-3 border-b border-slate-100 p-5 dark:border-slate-700">
+      <div className="flex items-center gap-3 border-b border-[var(--cp-border-strong)] p-5">
         <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-emerald-600 text-white">
           {businessLogo
             ? <Image src={businessLogo} alt={businessName} fill className="bg-white object-contain p-1" />
             : <Store size={22} />}
         </div>
         <div className="min-w-0">
-          <h1 className="truncate text-base font-black text-slate-950 dark:text-white">{businessName}</h1>
+          <h1 className="truncate text-base font-black text-[var(--cp-accent)]">{businessName}</h1>
           {isEmployee ? (
             <>
-              <p className="truncate text-sm font-bold text-slate-600 dark:text-slate-300">{userName}</p>
+              <p className="truncate text-sm font-bold text-[var(--cp-text-subtle)]">{userName}</p>
               <span className={`mt-0.5 inline-block rounded-full px-2 py-0.5 text-[10px] font-black ${
                 isManager && !isOwner
-                  ? 'bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-400'
-                  : 'bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-400'
+                  ? 'bg-violet-900/40 text-violet-400'
+                  : 'bg-[var(--cp-surface-3)] text-[var(--cp-text-muted)]'
               }`}>
                 {ROLE_LABELS[userRole] || userRole}
               </span>
             </>
           ) : (
-            <p className="text-xs font-bold text-slate-400 dark:text-slate-500">Propulsé par CaissePro</p>
+            <p className="text-xs font-bold text-[var(--cp-text-muted)]">Propulsé par CaissePro</p>
           )}
         </div>
       </div>
@@ -455,7 +455,7 @@ const AppShell = memo(function AppShell({ children, title, subtitle, action }: A
                     </p>
                   )}
                 </div>
-                <Link href="/upgrade" className="rounded-xl bg-emerald-600 px-2.5 py-1.5 text-[10px] font-black text-white transition hover:bg-emerald-700">
+                <Link href="/upgrade" className="rounded-xl bg-[var(--cp-accent)] px-2.5 py-1.5 text-[10px] font-black text-slate-950 transition hover:opacity-90">
                   {isActive && days !== null && days > 0 ? 'Renouveler' : 'Upgrader'}
                 </Link>
               </div>
@@ -479,14 +479,14 @@ const AppShell = memo(function AppShell({ children, title, subtitle, action }: A
       {/* Dashboard link (non-staff) */}
       {!isStaff && (
         <div className="px-4 pt-3">
-          <p className="mb-1 px-3 text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">ACCUEIL</p>
+          <p className="mb-1 px-3 text-[10px] font-black uppercase tracking-widest text-[var(--cp-accent)]">ACCUEIL</p>
           <Link
             href="/dashboard"
             onClick={() => { setMobileMenuOpen(false); window.dispatchEvent(new Event('play-navigation')) }}
             className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold transition-colors ${
               pathname === '/dashboard'
-                ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
-                : 'text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-700'
+                ? 'bg-[var(--cp-primary-dim)] text-emerald-400'
+                : 'text-[var(--cp-text-subtle)] hover:bg-[var(--cp-surface-2)]'
             }`}
           >
             <LayoutDashboard size={17} />
@@ -503,11 +503,11 @@ const AppShell = memo(function AppShell({ children, title, subtitle, action }: A
           return (
             <div
               key={section.key}
-              className={`overflow-hidden rounded-2xl border-l-4 bg-white shadow-sm dark:bg-slate-800 dark:shadow-none ${section.borderColor}`}
+              className={`overflow-hidden rounded-2xl border-l-4 bg-[var(--cp-surface-2)] ${section.borderColor}`}
             >
               <button
                 onClick={() => toggleSection(section.key)}
-                className={`flex w-full items-center justify-between px-4 py-3 text-[10px] font-black uppercase tracking-widest transition-colors hover:bg-slate-50 dark:hover:bg-slate-700 ${section.headerColor}`}
+                className={`flex w-full items-center justify-between px-4 py-3 text-[10px] font-black uppercase tracking-widest transition-colors hover:bg-[var(--cp-surface-3)] ${section.headerColor}`}
               >
                 <span>{section.title}</span>
                 <ChevronDown
@@ -536,8 +536,8 @@ const AppShell = memo(function AppShell({ children, title, subtitle, action }: A
                           active
                             ? `${section.bgColor} ${section.textColor}`
                             : isLocked
-                            ? 'text-slate-400 dark:text-slate-500'
-                            : 'text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-700'
+                            ? 'text-[var(--cp-text-muted)]'
+                            : 'text-[var(--cp-text-subtle)] hover:bg-[var(--cp-surface-3)]'
                         }`}
                       >
                         <Icon size={16} />
@@ -555,10 +555,10 @@ const AppShell = memo(function AppShell({ children, title, subtitle, action }: A
       </nav>
 
       {/* Logout */}
-      <div className="border-t border-slate-100 p-4 dark:border-slate-700">
+      <div className="border-t border-[var(--cp-border-strong)] p-4">
         <button
           onClick={logout}
-          className="w-full rounded-2xl bg-slate-950 px-4 py-3 text-sm font-black text-white transition hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600"
+          className="w-full rounded-2xl bg-[var(--cp-surface-3)] px-4 py-3 text-sm font-black text-[var(--cp-text)] transition hover:bg-[var(--cp-accent)] hover:text-slate-950"
         >
           Déconnexion
         </button>
@@ -567,7 +567,7 @@ const AppShell = memo(function AppShell({ children, title, subtitle, action }: A
   )
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-950 dark:bg-slate-900 dark:text-white">
+    <main className="min-h-screen bg-[var(--cp-bg)] text-[var(--cp-text)]">
       <NetworkStatusBanner />
       <SoundManager />
 
@@ -581,13 +581,13 @@ const AppShell = memo(function AppShell({ children, title, subtitle, action }: A
 
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-72 border-r border-slate-200 bg-white shadow-2xl transition-transform duration-300 dark:border-slate-700 dark:bg-slate-800 ${
+        className={`fixed inset-y-0 left-0 z-50 w-72 border-r border-[var(--cp-border-strong)] bg-[var(--cp-surface)] shadow-2xl transition-transform duration-300 ${
           mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
         <button
           onClick={() => setMobileMenuOpen(false)}
-          className="absolute right-4 top-4 rounded-xl bg-slate-100 p-2 text-slate-500 dark:bg-slate-700 dark:text-slate-300 lg:hidden"
+          className="absolute right-4 top-4 rounded-xl bg-[var(--cp-surface-2)] p-2 text-[var(--cp-text-subtle)] lg:hidden"
         >
           <X size={18} />
         </button>
@@ -596,18 +596,18 @@ const AppShell = memo(function AppShell({ children, title, subtitle, action }: A
 
       {/* Main content area */}
       <section className="lg:pl-72">
-        <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-700 dark:bg-slate-900/90">
+        <header className="sticky top-0 z-30 border-b border-[var(--cp-border-strong)] bg-[var(--cp-surface)]/90 backdrop-blur">
           <div className="flex items-center justify-between gap-4 px-5 py-5">
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setMobileMenuOpen(true)}
-                className="rounded-2xl border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 lg:hidden"
+                className="rounded-2xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface-2)] p-3 text-[var(--cp-text-subtle)] lg:hidden"
               >
                 <Menu size={20} />
               </button>
               <div>
-                <h2 className="text-3xl font-black tracking-tight text-slate-950 dark:text-white">{title}</h2>
-                {subtitle && <p className="mt-1 text-sm font-semibold text-slate-500 dark:text-slate-400">{subtitle}</p>}
+                <h2 className="text-3xl font-black tracking-tight text-[var(--cp-accent)]">{title}</h2>
+                {subtitle && <p className="mt-1 text-sm font-semibold text-[var(--cp-text-muted)]">{subtitle}</p>}
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -619,15 +619,15 @@ const AppShell = memo(function AppShell({ children, title, subtitle, action }: A
 
         <div className="px-5 py-8 pb-28 lg:pb-8">{children}</div>
 
-        <footer className="border-t border-slate-200 bg-white px-5 py-5 dark:border-slate-700 dark:bg-slate-800">
+        <footer className="border-t border-[var(--cp-border-strong)] bg-[var(--cp-surface)] px-5 py-5">
           <div className="flex flex-col items-center gap-3">
             <AmdyLabsBrand />
-            <div className="flex gap-4 text-xs font-bold text-slate-400 dark:text-slate-500">
-              <Link href="/help" className="hover:text-slate-700 dark:hover:text-slate-300">Aide</Link>
+            <div className="flex gap-4 text-xs font-bold text-[var(--cp-text-muted)]">
+              <Link href="/help" className="hover:text-[var(--cp-text)]">Aide</Link>
               <span>·</span>
-              <Link href="/legal" className="hover:text-slate-700 dark:hover:text-slate-300">Mentions légales</Link>
+              <Link href="/legal" className="hover:text-[var(--cp-text)]">Mentions légales</Link>
               <span>·</span>
-              <Link href="/feedback" className="hover:text-slate-700 dark:hover:text-slate-300">Feedback</Link>
+              <Link href="/feedback" className="hover:text-[var(--cp-text)]">Feedback</Link>
             </div>
           </div>
         </footer>
@@ -645,7 +645,7 @@ const AppShell = memo(function AppShell({ children, title, subtitle, action }: A
       )}
 
       {/* Bottom nav (mobile only) */}
-      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 lg:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--cp-border-strong)] bg-[var(--cp-surface)] lg:hidden">
         <div className="grid grid-cols-5">
           {(isStaff ? STAFF_BOTTOM_NAV : BOTTOM_NAV).map((item) => {
             const Icon = item.icon
@@ -656,7 +656,7 @@ const AppShell = memo(function AppShell({ children, title, subtitle, action }: A
                 href={item.href}
                 onClick={() => window.dispatchEvent(new Event('play-navigation'))}
                 className={`flex flex-col items-center justify-center gap-1 py-3 text-[10px] font-black transition-colors ${
-                  active ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300'
+                  active ? 'text-[var(--cp-accent)]' : 'text-[var(--cp-text-muted)] hover:text-[var(--cp-text-subtle)]'
                 }`}
               >
                 <Icon size={20} />
@@ -666,7 +666,7 @@ const AppShell = memo(function AppShell({ children, title, subtitle, action }: A
           })}
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="flex flex-col items-center justify-center gap-1 py-3 text-[10px] font-black text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
+            className="flex flex-col items-center justify-center gap-1 py-3 text-[10px] font-black text-[var(--cp-text-muted)] hover:text-[var(--cp-text-subtle)]"
           >
             <Menu size={20} />
             <span>Plus</span>

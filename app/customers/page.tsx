@@ -82,14 +82,14 @@ export default function CustomersPage() {
       {/* Add customer modal */}
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
-          <div className="relative w-full max-w-sm rounded-[2rem] bg-white p-8 shadow-2xl dark:bg-slate-800">
-            <button onClick={() => setShowForm(false)} className="absolute right-4 top-4 rounded-full bg-slate-100 p-1.5 text-slate-500 dark:bg-slate-700 dark:text-slate-300"><X size={16} /></button>
-            <h2 className="mb-6 text-xl font-black text-slate-950 dark:text-white">Nouveau client</h2>
+          <div className="relative w-full max-w-sm rounded-[2rem] bg-[var(--cp-surface)] p-8 shadow-2xl border border-[var(--cp-border-strong)]">
+            <button onClick={() => setShowForm(false)} className="absolute right-4 top-4 rounded-full bg-[var(--cp-surface-2)] p-1.5 text-[var(--cp-text-subtle)]"><X size={16} /></button>
+            <h2 className="mb-6 text-xl font-black text-[var(--cp-accent)]">Nouveau client</h2>
             <form onSubmit={addCustomer} className="space-y-4">
               <input required value={name} onChange={(e) => setName(e.target.value)} placeholder="Nom complet"
-                className="w-full rounded-2xl border border-slate-200 px-4 py-3.5 font-semibold outline-none focus:border-emerald-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder:text-slate-400" />
+                className="w-full rounded-2xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface-2)] px-4 py-3.5 font-semibold text-[var(--cp-text)] outline-none focus:border-[var(--cp-accent)] placeholder:text-[var(--cp-text-muted)]" />
               <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Téléphone (optionnel)"
-                className="w-full rounded-2xl border border-slate-200 px-4 py-3.5 font-semibold outline-none focus:border-emerald-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder:text-slate-400" />
+                className="w-full rounded-2xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface-2)] px-4 py-3.5 font-semibold text-[var(--cp-text)] outline-none focus:border-[var(--cp-accent)] placeholder:text-[var(--cp-text-muted)]" />
               <button type="submit" disabled={saving}
                 className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-600 py-4 font-black text-white hover:bg-emerald-700 disabled:opacity-60 transition">
                 {saving ? <Loader2 size={18} className="animate-spin" /> : <Plus size={18} />}
@@ -112,11 +112,11 @@ export default function CustomersPage() {
           ].map((stat) => {
             const Icon = stat.icon
             return (
-              <div key={stat.label} className={`rounded-[2rem] border bg-white p-5 shadow-sm dark:bg-slate-800 ${(stat as any).highlight ? 'border-red-200 dark:border-red-900/50' : 'border-slate-200 dark:border-slate-700'}`}>
+              <div key={stat.label} className={`rounded-[2rem] border bg-[var(--cp-surface)] p-5 ${(stat as any).highlight ? 'border-red-500/30' : 'border-[var(--cp-border-strong)]'}`}>
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-xs font-black uppercase tracking-wide text-slate-400 dark:text-slate-500">{stat.label}</p>
-                    <p className="mt-2 text-2xl font-black text-slate-950 dark:text-white">{stat.value}</p>
+                    <p className="text-xs font-black uppercase tracking-wide text-[var(--cp-accent)]">{stat.label}</p>
+                    <p className="mt-2 text-2xl font-black text-[var(--cp-text)]">{stat.value}</p>
                   </div>
                   <div className={`rounded-2xl p-2.5 ${stat.bg}`}><Icon size={20} className={stat.color} /></div>
                 </div>
@@ -128,7 +128,7 @@ export default function CustomersPage() {
         {/* Search */}
         <div className="relative">
           <Search className="absolute left-4 top-3.5 text-slate-400" size={18} />
-          <input className="w-full rounded-2xl border border-slate-200 bg-white py-3.5 pl-12 pr-4 text-sm font-semibold shadow-sm outline-none transition focus:border-emerald-400 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-500"
+          <input className="w-full rounded-2xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] py-3.5 pl-12 pr-4 text-sm font-semibold text-[var(--cp-text)] shadow-sm outline-none transition focus:border-[var(--cp-accent)] placeholder:text-[var(--cp-text-muted)]"
             placeholder="Rechercher par nom ou téléphone..." value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
 
@@ -136,7 +136,7 @@ export default function CustomersPage() {
         {loading ? (
           <div className="space-y-3">{[...Array(4)].map((_, i) => <SkeletonRow key={i} />)}</div>
         ) : filtered.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-slate-300 bg-white p-14 text-center dark:border-slate-700 dark:bg-slate-800">
+          <div className="rounded-3xl border border-dashed border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-14 text-center">
             <Users className="mx-auto mb-4 text-slate-300 dark:text-slate-600" size={48} />
             <h3 className="text-xl font-black text-slate-950 dark:text-white">Aucun client</h3>
             <p className="mt-2 text-sm font-semibold text-slate-500 dark:text-slate-400">

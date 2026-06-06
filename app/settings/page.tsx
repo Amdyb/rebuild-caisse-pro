@@ -94,7 +94,7 @@ export default function SettingsPage() {
     setTimeout(() => setSaved(false), 3000)
   }
 
-  const inputCls = 'w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 font-semibold text-slate-950 outline-none transition focus:border-emerald-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder:text-slate-400'
+  const inputCls = 'w-full rounded-2xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface-2)] px-4 py-3.5 font-semibold text-[var(--cp-text)] outline-none transition focus:border-[var(--cp-accent)] placeholder:text-[var(--cp-text-muted)]'
 
   if (loading) return (
     <AppShell title="Paramètres">
@@ -114,8 +114,8 @@ export default function SettingsPage() {
 
         <form onSubmit={save} className="space-y-5">
           {/* Logo */}
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
-            <h3 className="mb-4 text-sm font-black uppercase tracking-wide text-slate-400">Logo du commerce</h3>
+          <div className="rounded-[2rem] border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-6">
+            <h3 className="mb-4 text-sm font-black uppercase tracking-wide text-[var(--cp-accent)]">Logo du commerce</h3>
             <div className="flex items-center gap-4">
               <div onClick={() => logoRef.current?.click()}
                 className="flex h-20 w-20 cursor-pointer items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 hover:border-emerald-400 transition dark:border-slate-600 dark:bg-slate-700">
@@ -130,8 +130,8 @@ export default function SettingsPage() {
           </div>
 
           {/* Business info */}
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800 space-y-4">
-            <h3 className="text-sm font-black uppercase tracking-wide text-slate-400">Informations</h3>
+          <div className="rounded-[2rem] border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-6 space-y-4">
+            <h3 className="text-sm font-black uppercase tracking-wide text-[var(--cp-accent)]">Informations</h3>
             <div>
               <label className="mb-1.5 block text-sm font-black text-slate-700 dark:text-slate-300">Nom du commerce *</label>
               <input required value={form.name} onChange={(e) => setF('name', e.target.value)} className={inputCls} />
@@ -154,8 +154,8 @@ export default function SettingsPage() {
           </div>
 
           {/* Contact */}
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800 space-y-4">
-            <h3 className="text-sm font-black uppercase tracking-wide text-slate-400">Contact</h3>
+          <div className="rounded-[2rem] border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-6 space-y-4">
+            <h3 className="text-sm font-black uppercase tracking-wide text-[var(--cp-accent)]">Contact</h3>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <label className="mb-1.5 block text-sm font-black text-slate-700 dark:text-slate-300">Téléphone</label>

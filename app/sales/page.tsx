@@ -85,7 +85,7 @@ export default function SalesPage() {
   const action = (
     <div className="flex gap-2">
       <button onClick={() => businessId && load(businessId)}
-        className="flex items-center gap-1.5 rounded-2xl border border-slate-200 px-4 py-2.5 text-sm font-black text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700 transition">
+        className="flex items-center gap-1.5 rounded-2xl border border-[var(--cp-border-strong)] px-4 py-2.5 text-sm font-black text-[var(--cp-text-subtle)] hover:bg-[var(--cp-surface-2)] transition">
         <RefreshCw size={15} />
       </button>
       <Link href="/pos" className="flex items-center gap-2 rounded-2xl bg-emerald-600 px-4 py-2.5 text-sm font-black text-white hover:bg-emerald-700 transition">
@@ -107,11 +107,11 @@ export default function SalesPage() {
           ].map((stat) => {
             const Icon = stat.icon
             return (
-              <div key={stat.label} className={`rounded-[2rem] border bg-white p-5 shadow-sm dark:bg-slate-800 ${stat.highlight ? 'border-red-200 dark:border-red-900/50' : 'border-slate-200 dark:border-slate-700'}`}>
+              <div key={stat.label} className={`rounded-[2rem] border bg-[var(--cp-surface)] p-5 ${stat.highlight ? 'border-red-500/30' : 'border-[var(--cp-border-strong)]'}`}>
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-xs font-black uppercase tracking-wide text-slate-400 dark:text-slate-500">{stat.label}</p>
-                    <p className="mt-2 text-2xl font-black text-slate-950 dark:text-white">{stat.value}</p>
+                    <p className="text-xs font-black uppercase tracking-wide text-[var(--cp-accent)]">{stat.label}</p>
+                    <p className="mt-2 text-2xl font-black text-[var(--cp-text)]">{stat.value}</p>
                   </div>
                   <div className={`rounded-2xl p-2.5 ${stat.bg}`}><Icon size={20} className={stat.color} /></div>
                 </div>
@@ -124,13 +124,13 @@ export default function SalesPage() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-4 top-3.5 text-slate-400" size={18} />
-            <input className="w-full rounded-2xl border border-slate-200 bg-white py-3.5 pl-12 pr-4 text-sm font-semibold text-slate-800 shadow-sm outline-none transition focus:border-emerald-400 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-500"
+            <input className="w-full rounded-2xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] py-3.5 pl-12 pr-4 text-sm font-semibold text-[var(--cp-text)] shadow-sm outline-none transition focus:border-[var(--cp-accent)] placeholder:text-[var(--cp-text-muted)]"
               placeholder="Client, téléphone, paiement..." value={search} onChange={(e) => setSearch(e.target.value)} />
           </div>
-          <div className="flex rounded-2xl border border-slate-200 bg-white p-1 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+          <div className="flex rounded-2xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-1">
             {(['today', 'week', 'month', 'all'] as Period[]).map((p) => (
               <button key={p} onClick={() => setPeriod(p)}
-                className={`rounded-xl px-4 py-2.5 text-sm font-black transition ${period === p ? 'bg-emerald-600 text-white' : 'text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-700'}`}>
+                className={`rounded-xl px-4 py-2.5 text-sm font-black transition ${period === p ? 'bg-emerald-600 text-white' : 'text-[var(--cp-text-subtle)] hover:bg-[var(--cp-surface-2)]'}`}>
                 {p === 'today' ? 'Jour' : p === 'week' ? 'Semaine' : p === 'month' ? 'Mois' : 'Tout'}
               </button>
             ))}
@@ -141,26 +141,26 @@ export default function SalesPage() {
         {loading ? (
           <div className="space-y-3">{[...Array(5)].map((_, i) => <SkeletonRow key={i} />)}</div>
         ) : filtered.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-slate-300 bg-white p-14 text-center dark:border-slate-700 dark:bg-slate-800">
+          <div className="rounded-3xl border border-dashed border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-14 text-center">
             <ReceiptText className="mx-auto mb-4 text-slate-300 dark:text-slate-600" size={48} />
-            <h3 className="text-xl font-black text-slate-950 dark:text-white">Aucune vente</h3>
-            <p className="mt-2 text-sm font-semibold text-slate-500 dark:text-slate-400">Les ventes de la période sélectionnée apparaîtront ici.</p>
+            <h3 className="text-xl font-black text-[var(--cp-text)]">Aucune vente</h3>
+            <p className="mt-2 text-sm font-semibold text-[var(--cp-text-muted)]">Les ventes de la période sélectionnée apparaîtront ici.</p>
           </div>
         ) : (
-          <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
-            <div className="divide-y divide-slate-100 dark:divide-slate-700">
+          <div className="overflow-hidden rounded-3xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface)]">
+            <div className="divide-y divide-[var(--cp-border)]">
               {filtered.map((sale) => {
                 const d = new Date(sale.created_at)
                 const badge = PAYMENT_BADGE[sale.payment_method || ''] || PAYMENT_BADGE.card
                 return (
-                  <div key={sale.id} className="flex flex-col gap-3 px-5 py-4 transition hover:bg-slate-50 dark:hover:bg-slate-700/50 sm:flex-row sm:items-center sm:justify-between">
+                  <div key={sale.id} className="flex flex-col gap-3 px-5 py-4 transition hover:bg-[var(--cp-surface-2)] sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-start gap-3">
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400">
                         <ReceiptText size={18} />
                       </div>
                       <div>
-                        <p className="font-black text-slate-950 dark:text-white">{sale.customers?.full_name || 'Client comptoir'}</p>
-                        <p className="text-xs font-semibold text-slate-400 dark:text-slate-500">
+                        <p className="font-black text-[var(--cp-text)]">{sale.customers?.full_name || 'Client comptoir'}</p>
+                        <p className="text-xs font-semibold text-[var(--cp-text-muted)]">
                           {d.toLocaleDateString('fr-FR')} à {d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
                           {' · '}#{sale.id.slice(0, 8)}
                         </p>
@@ -171,13 +171,13 @@ export default function SalesPage() {
                         {PAYMENT_LABELS[sale.payment_method || ''] || sale.payment_method}
                       </span>
                       <div className="text-right">
-                        <p className="font-black text-slate-950 dark:text-white">{Number(sale.total || 0).toLocaleString('fr-FR')} CFA</p>
+                        <p className="font-black text-[var(--cp-text)]">{Number(sale.total || 0).toLocaleString('fr-FR')} CFA</p>
                         {Number(sale.remaining_amount || 0) > 0 && (
                           <p className="text-xs font-bold text-red-600 dark:text-red-400">Reste : {Number(sale.remaining_amount).toLocaleString('fr-FR')} CFA</p>
                         )}
                       </div>
                       <Link href={`/sales/${sale.id}/receipt`}
-                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border border-slate-200 text-slate-500 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-700 transition dark:border-slate-600 dark:hover:bg-emerald-900/20 dark:hover:text-emerald-400">
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border border-[var(--cp-border-strong)] text-[var(--cp-text-muted)] hover:bg-[var(--cp-primary-dim)] hover:border-emerald-500/30 hover:text-emerald-400 transition">
                         <Eye size={16} />
                       </Link>
                     </div>
@@ -190,9 +190,9 @@ export default function SalesPage() {
 
         {/* Avg */}
         {filtered.length > 0 && (
-          <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
-            <span className="text-sm font-bold text-slate-500 dark:text-slate-400">Panier moyen : </span>
-            <span className="font-black text-slate-950 dark:text-white">{avgSale.toLocaleString('fr-FR', { maximumFractionDigits: 0 })} CFA</span>
+          <div className="rounded-2xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-4">
+            <span className="text-sm font-bold text-[var(--cp-text-muted)]">Panier moyen : </span>
+            <span className="font-black text-[var(--cp-text)]">{avgSale.toLocaleString('fr-FR', { maximumFractionDigits: 0 })} CFA</span>
           </div>
         )}
       </div>

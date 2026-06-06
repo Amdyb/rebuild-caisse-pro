@@ -81,22 +81,22 @@ export default function NewProductPage() {
     router.push('/products')
   }
 
-  const inputCls = 'w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 font-semibold text-slate-950 outline-none transition focus:border-emerald-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder:text-slate-400'
+  const inputCls = 'w-full rounded-2xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface-2)] px-4 py-3.5 font-semibold text-[var(--cp-text)] outline-none transition focus:border-[var(--cp-accent)] placeholder:text-[var(--cp-text-muted)]'
 
   return (
     <AppShell title="Nouveau produit" subtitle="Ajoutez un produit à votre catalogue."
-      action={<Link href="/products" className="flex items-center gap-2 rounded-2xl border border-slate-200 px-4 py-2.5 text-sm font-black text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700"><ArrowLeft size={16} /> Retour</Link>}>
+      action={<Link href="/products" className="flex items-center gap-2 rounded-2xl border border-[var(--cp-border-strong)] px-4 py-2.5 text-sm font-black text-[var(--cp-text-subtle)] hover:bg-[var(--cp-surface-2)]"><ArrowLeft size={16} /> Retour</Link>}>
       <div className="mx-auto max-w-2xl">
         {error && (
           <div className="mb-5 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-bold text-red-700 dark:border-red-900 dark:bg-red-900/20 dark:text-red-400">{error}</div>
         )}
         <form onSubmit={save} className="space-y-5">
           {/* Image */}
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
-            <h3 className="mb-4 text-sm font-black uppercase tracking-wide text-slate-400">Photo du produit</h3>
+          <div className="rounded-[2rem] border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-6">
+            <h3 className="mb-4 text-sm font-black uppercase tracking-wide text-[var(--cp-accent)]">Photo du produit</h3>
             <div
               onClick={() => fileRef.current?.click()}
-              className="flex h-48 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 transition hover:border-emerald-400 hover:bg-emerald-50/50 dark:border-slate-600 dark:bg-slate-700"
+              className="flex h-48 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-[var(--cp-border-strong)] bg-[var(--cp-surface-2)] transition hover:border-[var(--cp-accent)] hover:bg-[var(--cp-accent-dim)]"
             >
               {imagePreview
                 ? <img src={imagePreview} alt="preview" className="h-full w-full object-cover" />
@@ -114,8 +114,8 @@ export default function NewProductPage() {
           </div>
 
           {/* Info */}
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
-            <h3 className="mb-4 text-sm font-black uppercase tracking-wide text-slate-400">Informations</h3>
+          <div className="rounded-[2rem] border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-6">
+            <h3 className="mb-4 text-sm font-black uppercase tracking-wide text-[var(--cp-accent)]">Informations</h3>
             <div className="space-y-4">
               <div>
                 <label className="mb-1.5 block text-sm font-black text-slate-700 dark:text-slate-300">Nom du produit *</label>
@@ -139,8 +139,8 @@ export default function NewProductPage() {
           </div>
 
           {/* Prices */}
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
-            <h3 className="mb-4 text-sm font-black uppercase tracking-wide text-slate-400">Prix (CFA)</h3>
+          <div className="rounded-[2rem] border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-6">
+            <h3 className="mb-4 text-sm font-black uppercase tracking-wide text-[var(--cp-accent)]">Prix (CFA)</h3>
             <div className="grid gap-4 sm:grid-cols-3">
               <div>
                 <label className="mb-1.5 block text-sm font-black text-slate-700 dark:text-slate-300">Prix de vente</label>
@@ -164,8 +164,8 @@ export default function NewProductPage() {
           </div>
 
           {/* Stock */}
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
-            <h3 className="mb-4 text-sm font-black uppercase tracking-wide text-slate-400">Stock</h3>
+          <div className="rounded-[2rem] border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-6">
+            <h3 className="mb-4 text-sm font-black uppercase tracking-wide text-[var(--cp-accent)]">Stock</h3>
             <div>
               <label className="mb-1.5 block text-sm font-black text-slate-700 dark:text-slate-300">Quantité en stock</label>
               <input type="number" min="0" value={form.stock} onChange={(e) => set('stock', e.target.value)} placeholder="Laisser vide si illimité" className={inputCls} />

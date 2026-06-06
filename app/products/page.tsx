@@ -117,8 +117,8 @@ export default function ProductsPage() {
       {/* Restock modal */}
       {restockProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
-          <div className="relative w-full max-w-sm rounded-[2rem] bg-white p-8 shadow-2xl dark:bg-slate-800">
-            <button onClick={() => setRestockProduct(null)} className="absolute right-4 top-4 rounded-full bg-slate-100 p-1.5 text-slate-500 dark:bg-slate-700 dark:text-slate-300">
+          <div className="relative w-full max-w-sm rounded-[2rem] bg-[var(--cp-surface)] p-8 shadow-2xl border border-[var(--cp-border-strong)]">
+            <button onClick={() => setRestockProduct(null)} className="absolute right-4 top-4 rounded-full bg-[var(--cp-surface-2)] p-1.5 text-[var(--cp-text-subtle)]">
               <X size={16} />
             </button>
             <div className="mb-5 flex items-center gap-3">
@@ -126,7 +126,7 @@ export default function ProductsPage() {
                 <RefreshCw size={22} />
               </div>
               <div>
-                <h2 className="text-lg font-black text-slate-950 dark:text-white">Réassort</h2>
+                <h2 className="text-lg font-black text-[var(--cp-accent)]">Réassort</h2>
                 <p className="max-w-[200px] truncate text-sm font-semibold text-slate-500">{restockProduct.name}</p>
               </div>
             </div>
@@ -135,7 +135,7 @@ export default function ProductsPage() {
               type="number" min="0" autoFocus
               value={restockQty} onChange={(e) => setRestockQty(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && saveRestock()}
-              className="w-full rounded-2xl border border-slate-300 px-5 py-4 text-2xl font-black outline-none focus:border-blue-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white"
+              className="w-full rounded-2xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface-2)] px-5 py-4 text-2xl font-black text-[var(--cp-text)] outline-none focus:border-[var(--cp-accent)]"
             />
             <p className="mt-1 text-xs font-semibold text-slate-400">Stock actuel : {restockProduct.stock ?? 0}</p>
             <button onClick={saveRestock} disabled={restockSaving}

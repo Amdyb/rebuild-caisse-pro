@@ -69,7 +69,7 @@ export default function ProfilePage() {
     router.push('/login')
   }
 
-  const inputCls = 'w-full rounded-2xl border border-slate-200 bg-white px-4 py-3.5 font-semibold text-slate-950 outline-none transition focus:border-emerald-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder:text-slate-400'
+  const inputCls = 'w-full rounded-2xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface-2)] px-4 py-3.5 font-semibold text-[var(--cp-text)] outline-none transition focus:border-[var(--cp-accent)] placeholder:text-[var(--cp-text-muted)]'
 
   if (loading) return (
     <AppShell title="Profil">
@@ -81,21 +81,21 @@ export default function ProfilePage() {
     <AppShell title="Mon profil" subtitle="Gérez vos informations personnelles.">
       <div className="mx-auto max-w-lg space-y-5">
         {/* Avatar */}
-        <div className="flex items-center gap-4 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+        <div className="flex items-center gap-4 rounded-[2rem] border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-6">
           <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-600 text-2xl font-black text-white">
             {fullName ? fullName[0].toUpperCase() : email[0]?.toUpperCase() || '?'}
           </div>
           <div>
-            <h3 className="font-black text-slate-950 dark:text-white">{fullName || 'Mon profil'}</h3>
-            <p className="text-sm font-semibold text-slate-500 dark:text-slate-400">{email}</p>
+            <h3 className="font-black text-[var(--cp-accent)]">{fullName || 'Mon profil'}</h3>
+            <p className="text-sm font-semibold text-[var(--cp-text-muted)]">{email}</p>
           </div>
         </div>
 
         {/* Profile form */}
-        <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+        <div className="rounded-[2rem] border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-6">
           <div className="mb-4 flex items-center gap-2">
             <User size={16} className="text-slate-400" />
-            <h3 className="text-sm font-black uppercase tracking-wide text-slate-400">Informations</h3>
+            <h3 className="text-sm font-black uppercase tracking-wide text-[var(--cp-accent)]">Informations</h3>
           </div>
           {saved && (
             <div className="mb-4 flex items-center gap-2 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-bold text-emerald-700 dark:border-emerald-900 dark:bg-emerald-900/20 dark:text-emerald-400">
@@ -104,11 +104,11 @@ export default function ProfilePage() {
           )}
           <form onSubmit={saveProfile} className="space-y-4">
             <div>
-              <label className="mb-1.5 block text-sm font-black text-slate-700 dark:text-slate-300">Nom complet</label>
+              <label className="mb-1.5 block text-sm font-black text-[var(--cp-text-subtle)]">Nom complet</label>
               <input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Votre nom" className={inputCls} />
             </div>
             <div>
-              <label className="mb-1.5 block text-sm font-black text-slate-700 dark:text-slate-300">Email</label>
+              <label className="mb-1.5 block text-sm font-black text-[var(--cp-text-subtle)]">Email</label>
               <input value={email} disabled className={inputCls + ' opacity-60 cursor-not-allowed'} />
             </div>
             <button type="submit" disabled={saving}
@@ -120,10 +120,10 @@ export default function ProfilePage() {
         </div>
 
         {/* Password change */}
-        <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+        <div className="rounded-[2rem] border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-6">
           <div className="mb-4 flex items-center gap-2">
             <KeyRound size={16} className="text-slate-400" />
-            <h3 className="text-sm font-black uppercase tracking-wide text-slate-400">Mot de passe</h3>
+            <h3 className="text-sm font-black uppercase tracking-wide text-[var(--cp-accent)]">Mot de passe</h3>
           </div>
           {savedPwd && (
             <div className="mb-4 flex items-center gap-2 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-bold text-emerald-700 dark:border-emerald-900 dark:bg-emerald-900/20 dark:text-emerald-400">
@@ -135,11 +135,11 @@ export default function ProfilePage() {
           )}
           <form onSubmit={changePassword} className="space-y-4">
             <div>
-              <label className="mb-1.5 block text-sm font-black text-slate-700 dark:text-slate-300">Nouveau mot de passe</label>
+              <label className="mb-1.5 block text-sm font-black text-[var(--cp-text-subtle)]">Nouveau mot de passe</label>
               <input type="password" required minLength={6} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder="Minimum 6 caractères" className={inputCls} />
             </div>
             <div>
-              <label className="mb-1.5 block text-sm font-black text-slate-700 dark:text-slate-300">Confirmer</label>
+              <label className="mb-1.5 block text-sm font-black text-[var(--cp-text-subtle)]">Confirmer</label>
               <input type="password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="••••••••" className={inputCls} />
             </div>
             <button type="submit" disabled={savingPwd}

@@ -314,14 +314,14 @@ export default function POSPage() {
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/30">
                 <ShoppingCart size={28} className="text-amber-600 dark:text-amber-400" />
               </div>
-              <h2 className="text-xl font-black text-slate-950 dark:text-white">Limite du plan Gratuit</h2>
-              <p className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+              <h2 className="text-xl font-black text-[var(--cp-accent)]">Limite du plan Gratuit</h2>
+              <p className="text-sm font-semibold text-[var(--cp-text-muted)]">
                 Vous avez atteint <strong>50 ventes ce mois-ci</strong>. Passez à un plan payant pour vendre sans limite.
               </p>
               <Link href="/upgrade" className="w-full rounded-2xl bg-emerald-600 py-4 text-sm font-black text-white shadow-lg shadow-emerald-600/20 hover:bg-emerald-700 transition text-center block">
                 Upgrader maintenant
               </Link>
-              <button onClick={() => setShowPlanLimit(false)} className="w-full rounded-2xl border border-slate-200 py-3 text-sm font-black text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700 transition">
+              <button onClick={() => setShowPlanLimit(false)} className="w-full rounded-2xl border border-[var(--cp-border-strong)] py-3 text-sm font-black text-[var(--cp-text-subtle)] hover:bg-[var(--cp-surface-2)] transition">
                 Plus tard
               </button>
             </div>
@@ -346,12 +346,12 @@ export default function POSPage() {
         )}
 
         {/* Search bar */}
-        <div className="flex gap-3 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+        <div className="flex gap-3 rounded-3xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-4">
           <div className="relative flex-1">
             <Zap className="absolute left-4 top-3.5 text-emerald-600" size={20} />
             <input
               ref={searchRef}
-              className="w-full rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-12 pr-4 font-black text-slate-950 outline-none transition focus:border-emerald-400 focus:bg-white dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder:text-slate-400 dark:focus:bg-slate-600"
+              className="w-full rounded-2xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface-2)] py-3 pl-12 pr-4 font-black text-[var(--cp-text)] outline-none transition focus:border-[var(--cp-accent)] focus:bg-[var(--cp-surface-3)] placeholder:text-[var(--cp-text-muted)]"
               placeholder="Rechercher produit ou code-barres..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -366,7 +366,7 @@ export default function POSPage() {
           <button
             onClick={() => setShowScanner(true)}
             title="Scanner un code-barres"
-            className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 font-black text-slate-700 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-300 dark:hover:border-emerald-600 dark:hover:text-emerald-400"
+            className="flex items-center gap-2 rounded-2xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface-2)] px-4 font-black text-[var(--cp-text-subtle)] transition hover:border-[var(--cp-accent)]/50 hover:bg-[var(--cp-accent-dim)] hover:text-[var(--cp-accent)]"
           >
             <ScanLine size={20} />
           </button>

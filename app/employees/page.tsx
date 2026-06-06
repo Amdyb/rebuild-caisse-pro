@@ -170,7 +170,7 @@ export default function EmployeesPage() {
 
         {/* Stats */}
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+          <div className="cp-card">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-xs font-black uppercase tracking-wide text-slate-400">Employés actifs</p>
@@ -179,7 +179,7 @@ export default function EmployeesPage() {
               <div className="rounded-2xl bg-emerald-50 p-2.5 dark:bg-emerald-900/30"><Users size={20} className="text-emerald-600 dark:text-emerald-400" /></div>
             </div>
           </div>
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+          <div className="cp-card">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-xs font-black uppercase tracking-wide text-slate-400">Managers</p>
@@ -202,7 +202,7 @@ export default function EmployeesPage() {
         ) : (
           <div className="space-y-3">
             {employees.map((emp) => (
-              <div key={emp.id} className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+              <div key={emp.id} className="cp-card">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-3">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-base font-black text-slate-600 dark:bg-slate-700 dark:text-slate-300">
@@ -242,7 +242,7 @@ export default function EmployeesPage() {
         )}
 
         {/* Role guide */}
-        <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+        <div className="cp-card">
           <h3 className="mb-3 text-sm font-black uppercase tracking-wide text-slate-400">Guide des rôles</h3>
           <div className="grid gap-3 sm:grid-cols-3 text-sm">
             {[
