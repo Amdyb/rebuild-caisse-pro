@@ -1,0 +1,14 @@
+{
+  "name": "CaissePro",
+  "short_name": "CaissePro",
+  "description": "Caisse enregistreuse pour commerçants africains",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#16a34a",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/caissepro-logo.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/caissepro-logo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
