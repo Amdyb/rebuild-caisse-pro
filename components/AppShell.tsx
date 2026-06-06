@@ -69,14 +69,12 @@ const STAFF_ROLES = ['sales', 'staff', 'employee', 'cashier']
 const MANAGER_ROLES = ['manager', 'admin', 'owner']
 const SUPER_ADMIN_EMAILS = ['infos@dakarvapes.com', 'azzideejay@gmail.com']
 
-const STAFF_ALLOWED_PATHS = ['/pos', '/checkout', '/register-shifts', '/profile', '/change-password', '/expenses', '/upgrade']
+const STAFF_ALLOWED_PATHS = ['/pos', '/checkout', '/profile', '/change-password', '/expenses', '/upgrade']
 const MANAGER_ALLOWED_PATHS = [
-  '/dashboard', '/pos', '/checkout', '/products', '/sales', '/refunds', '/register-shifts',
-  '/customers', '/expenses', '/reports', '/finances', '/orders', '/debts',
-  '/payment-links', '/purchases', '/stock-movements', '/activity',
-  '/settings', '/payment-methods', '/employees', '/staff',
-  '/storefront', '/categories', '/suppliers',
-  '/profile', '/change-password', '/help', '/feedback', '/legal', '/upgrade',
+  '/dashboard', '/pos', '/checkout', '/products', '/sales',
+  '/customers', '/expenses', '/reports',
+  '/settings', '/employees',
+  '/profile', '/change-password', '/upgrade',
 ]
 
 const ROLE_LABELS: Record<string, string> = {
@@ -92,7 +90,7 @@ const STAFF_SECTION: SectionConfig = {
   items: [
     { label: 'Vendre', href: '/pos', icon: ShoppingCart },
     { label: 'Produits', href: '/products', icon: Package, readOnly: true },
-    { label: 'Caisse du jour', href: '/register-shifts', icon: Wallet },
+    { label: 'Caisse du jour', href: '/pos', icon: Wallet },
     { label: 'Dépenses', href: '/expenses', icon: Receipt },
   ],
 }
@@ -113,8 +111,8 @@ const PROFILE_SECTION: SectionConfig = {
   items: [
     { label: 'Profil', href: '/profile', icon: User },
     { label: 'Parametres', href: '/settings', icon: Settings },
-    { label: 'Modes de paiement', href: '/payment-methods', icon: CreditCard },
-    { label: 'WhatsApp', href: '/settings/whatsapp', icon: MessageCircle },
+    { label: 'Modes de paiement', href: '/settings', icon: CreditCard },
+    { label: 'WhatsApp', href: '/settings', icon: MessageCircle },
     { label: 'Mentions légales', href: '/legal', icon: FileText },
     { label: 'Aide', href: '/help', icon: HelpCircle },
   ],
@@ -153,7 +151,7 @@ const BOTTOM_NAV = [
 const STAFF_BOTTOM_NAV = [
   { label: 'Vendre', href: '/pos', icon: ShoppingCart },
   { label: 'Produits', href: '/products', icon: Package },
-  { label: 'Caisse', href: '/register-shifts', icon: Wallet },
+  { label: 'Caisse', href: '/pos', icon: Wallet },
   { label: 'Profil', href: '/profile', icon: User },
 ]
 
@@ -161,8 +159,8 @@ function getNavSections(businessType: string): SectionConfig[] {
   const CAISSE_BASE_ITEMS: NavItem[] = [
     { label: 'Vendre', href: '/pos', icon: ShoppingCart },
     { label: 'Historique des ventes', href: '/sales', icon: ReceiptText },
-    { label: 'Remboursements', href: '/refunds', icon: RotateCcw },
-    { label: 'Caisse du jour', href: '/register-shifts', icon: Wallet },
+    { label: 'Remboursements', href: '/sales', icon: RotateCcw },
+    { label: 'Caisse du jour', href: '/pos', icon: Wallet },
   ]
   const GESTION_BASE: Omit<SectionConfig, 'items'> = {
     key: 'gestion', title: 'GESTION',
@@ -184,72 +182,72 @@ function getNavSections(businessType: string): SectionConfig[] {
     items: [
       { label: 'Rapports', href: '/reports', icon: TrendingUp },
       { label: 'Dépenses', href: '/expenses', icon: Receipt },
-      { label: 'Finances', href: '/finances', icon: DollarSign, lockedPlan: 'business' },
+      { label: 'Finances', href: '/reports', icon: DollarSign, lockedPlan: 'business' },
     ],
   }
   const BOUTIQUE_ITEMS: NavItem[] = [
-    { label: 'Ma boutique en ligne', href: '/storefront', icon: Globe },
-    { label: 'Commandes clients', href: '/orders', icon: ShoppingBag },
-    { label: 'QR Code boutique', href: '/storefront/qr', icon: QrCode, lockedPlan: 'business' },
-    { label: 'Partager boutique', href: '/storefront/share', icon: Share2 },
+    { label: 'Ma boutique en ligne', href: '/upgrade', icon: Globe },
+    { label: 'Commandes clients', href: '/sales', icon: ShoppingBag },
+    { label: 'QR Code boutique', href: '/upgrade', icon: QrCode, lockedPlan: 'business' },
+    { label: 'Partager boutique', href: '/upgrade', icon: Share2 },
   ]
   const TAIL = [PROFILE_SECTION, SECURITY_SECTION]
 
   switch (businessType) {
     case 'restaurant':
       return [
-        { key: 'caisse', title: 'CAISSE', borderColor: 'border-orange-500', bgColor: 'bg-orange-50 dark:bg-orange-900/30', textColor: 'text-orange-700 dark:text-orange-400', headerColor: 'text-orange-600 dark:text-orange-400', defaultOpen: true, items: [{ label: 'Caisse', href: '/pos', icon: ShoppingCart }, { label: 'Commandes', href: '/orders', icon: ShoppingBag }, { label: 'Historique', href: '/sales', icon: ReceiptText }, { label: 'Caisse du jour', href: '/register-shifts', icon: Wallet }] },
+        { key: 'caisse', title: 'CAISSE', borderColor: 'border-orange-500', bgColor: 'bg-orange-50 dark:bg-orange-900/30', textColor: 'text-orange-700 dark:text-orange-400', headerColor: 'text-orange-600 dark:text-orange-400', defaultOpen: true, items: [{ label: 'Caisse', href: '/pos', icon: ShoppingCart }, { label: 'Commandes', href: '/sales', icon: ShoppingBag }, { label: 'Historique', href: '/sales', icon: ReceiptText }, { label: 'Caisse du jour', href: '/pos', icon: Wallet }] },
         { ...GESTION_BASE, items: [{ label: 'Menu & Produits', href: '/products', icon: Package }, { label: 'Clients', href: '/customers', icon: Users }, { label: 'Employés', href: '/employees', icon: UserCog, lockedPlan: 'starter' }, { label: 'Dépenses', href: '/expenses', icon: Receipt }] },
         { ...BOUTIQUE_BASE, items: BOUTIQUE_ITEMS }, RAPPORTS, ...TAIL,
       ]
     case 'beauty':
       return [
-        { key: 'caisse', title: 'CAISSE', borderColor: 'border-pink-500', bgColor: 'bg-pink-50 dark:bg-pink-900/30', textColor: 'text-pink-700 dark:text-pink-400', headerColor: 'text-pink-600 dark:text-pink-400', defaultOpen: true, items: [{ label: 'Caisse', href: '/pos', icon: ShoppingCart }, { label: 'Rendez-vous', href: '/appointments', icon: Calendar }, { label: 'Historique', href: '/sales', icon: ReceiptText }, { label: 'Caisse du jour', href: '/register-shifts', icon: Wallet }] },
+        { key: 'caisse', title: 'CAISSE', borderColor: 'border-pink-500', bgColor: 'bg-pink-50 dark:bg-pink-900/30', textColor: 'text-pink-700 dark:text-pink-400', headerColor: 'text-pink-600 dark:text-pink-400', defaultOpen: true, items: [{ label: 'Caisse', href: '/pos', icon: ShoppingCart }, { label: 'Rendez-vous', href: '/pos', icon: Calendar }, { label: 'Historique', href: '/sales', icon: ReceiptText }, { label: 'Caisse du jour', href: '/pos', icon: Wallet }] },
         { ...GESTION_BASE, items: [{ label: 'Services', href: '/products', icon: Scissors }, { label: 'Clients', href: '/customers', icon: Users }, { label: 'Employés', href: '/employees', icon: UserCog, lockedPlan: 'starter' }, { label: 'Dépenses', href: '/expenses', icon: Receipt }] },
-        { ...BOUTIQUE_BASE, items: [{ label: 'Ma boutique', href: '/storefront', icon: Globe }, { label: 'Réservations', href: '/appointments', icon: Calendar }, { label: 'QR Code boutique', href: '/storefront/qr', icon: QrCode, lockedPlan: 'business' }] },
+        { ...BOUTIQUE_BASE, items: [{ label: 'Ma boutique', href: '/upgrade', icon: Globe }, { label: 'Réservations', href: '/pos', icon: Calendar }, { label: 'QR Code boutique', href: '/upgrade', icon: QrCode, lockedPlan: 'business' }] },
         RAPPORTS, ...TAIL,
       ]
     case 'pharmacy':
       return [
-        { key: 'caisse', title: 'CAISSE', borderColor: 'border-blue-500', bgColor: 'bg-blue-50 dark:bg-blue-900/30', textColor: 'text-blue-700 dark:text-blue-400', headerColor: 'text-blue-600 dark:text-blue-400', defaultOpen: true, items: [{ label: 'Caisse', href: '/pos', icon: ShoppingCart }, { label: 'Ordonnances', href: '/prescriptions', icon: FileText }, { label: 'Historique', href: '/sales', icon: ReceiptText }, { label: 'Caisse du jour', href: '/register-shifts', icon: Wallet }] },
-        { ...GESTION_BASE, items: [{ label: 'Médicaments', href: '/products', icon: Package }, { label: 'Stock critique', href: '/products?filter=low', icon: AlertTriangle }, { label: 'Fournisseurs', href: '/suppliers', icon: Truck, lockedPlan: 'business' }, { label: 'Clients', href: '/customers', icon: Users }] },
+        { key: 'caisse', title: 'CAISSE', borderColor: 'border-blue-500', bgColor: 'bg-blue-50 dark:bg-blue-900/30', textColor: 'text-blue-700 dark:text-blue-400', headerColor: 'text-blue-600 dark:text-blue-400', defaultOpen: true, items: [{ label: 'Caisse', href: '/pos', icon: ShoppingCart }, { label: 'Ordonnances', href: '/pos', icon: FileText }, { label: 'Historique', href: '/sales', icon: ReceiptText }, { label: 'Caisse du jour', href: '/pos', icon: Wallet }] },
+        { ...GESTION_BASE, items: [{ label: 'Médicaments', href: '/products', icon: Package }, { label: 'Stock critique', href: '/products?filter=low', icon: AlertTriangle }, { label: 'Fournisseurs', href: '/products', icon: Truck, lockedPlan: 'business' }, { label: 'Clients', href: '/customers', icon: Users }] },
         { ...BOUTIQUE_BASE, items: BOUTIQUE_ITEMS }, RAPPORTS, ...TAIL,
       ]
     case 'garage':
       return [
-        { key: 'caisse', title: 'CAISSE', borderColor: 'border-slate-500', bgColor: 'bg-slate-100 dark:bg-slate-700', textColor: 'text-slate-700 dark:text-slate-300', headerColor: 'text-slate-600 dark:text-slate-400', defaultOpen: true, items: [{ label: 'Caisse', href: '/pos', icon: ShoppingCart }, { label: 'Interventions', href: '/services', icon: Wrench }, { label: 'Historique', href: '/sales', icon: ReceiptText }, { label: 'Caisse du jour', href: '/register-shifts', icon: Wallet }] },
-        { ...GESTION_BASE, items: [{ label: 'Pièces détachées', href: '/products', icon: Package }, { label: 'Clients', href: '/customers', icon: Users }, { label: 'Fournisseurs', href: '/suppliers', icon: Truck, lockedPlan: 'business' }, { label: 'Dépenses', href: '/expenses', icon: Receipt }] },
+        { key: 'caisse', title: 'CAISSE', borderColor: 'border-slate-500', bgColor: 'bg-slate-100 dark:bg-slate-700', textColor: 'text-slate-700 dark:text-slate-300', headerColor: 'text-slate-600 dark:text-slate-400', defaultOpen: true, items: [{ label: 'Caisse', href: '/pos', icon: ShoppingCart }, { label: 'Interventions', href: '/pos', icon: Wrench }, { label: 'Historique', href: '/sales', icon: ReceiptText }, { label: 'Caisse du jour', href: '/pos', icon: Wallet }] },
+        { ...GESTION_BASE, items: [{ label: 'Pièces détachées', href: '/products', icon: Package }, { label: 'Clients', href: '/customers', icon: Users }, { label: 'Fournisseurs', href: '/products', icon: Truck, lockedPlan: 'business' }, { label: 'Dépenses', href: '/expenses', icon: Receipt }] },
         { ...BOUTIQUE_BASE, items: BOUTIQUE_ITEMS }, RAPPORTS, ...TAIL,
       ]
     case 'btp':
       return [
-        { key: 'caisse', title: 'CAISSE', borderColor: 'border-yellow-500', bgColor: 'bg-yellow-50 dark:bg-yellow-900/30', textColor: 'text-yellow-700 dark:text-yellow-400', headerColor: 'text-yellow-600 dark:text-yellow-400', defaultOpen: true, items: [{ label: 'Caisse', href: '/pos', icon: ShoppingCart }, { label: 'Chantiers', href: '/projects', icon: HardHat }, { label: 'Historique', href: '/sales', icon: ReceiptText }, { label: 'Caisse du jour', href: '/register-shifts', icon: Wallet }] },
-        { ...GESTION_BASE, items: [{ label: 'Matériaux', href: '/products', icon: Package }, { label: 'Clients', href: '/customers', icon: Users }, { label: 'Fournisseurs', href: '/suppliers', icon: Truck, lockedPlan: 'business' }, { label: 'Dépenses', href: '/expenses', icon: Receipt }] },
-        { ...BOUTIQUE_BASE, items: [{ label: 'Ma boutique', href: '/storefront', icon: Globe }, { label: 'Devis & Commandes', href: '/orders', icon: ShoppingBag }, { label: 'QR Code boutique', href: '/storefront/qr', icon: QrCode, lockedPlan: 'business' }] },
+        { key: 'caisse', title: 'CAISSE', borderColor: 'border-yellow-500', bgColor: 'bg-yellow-50 dark:bg-yellow-900/30', textColor: 'text-yellow-700 dark:text-yellow-400', headerColor: 'text-yellow-600 dark:text-yellow-400', defaultOpen: true, items: [{ label: 'Caisse', href: '/pos', icon: ShoppingCart }, { label: 'Chantiers', href: '/products', icon: HardHat }, { label: 'Historique', href: '/sales', icon: ReceiptText }, { label: 'Caisse du jour', href: '/pos', icon: Wallet }] },
+        { ...GESTION_BASE, items: [{ label: 'Matériaux', href: '/products', icon: Package }, { label: 'Clients', href: '/customers', icon: Users }, { label: 'Fournisseurs', href: '/products', icon: Truck, lockedPlan: 'business' }, { label: 'Dépenses', href: '/expenses', icon: Receipt }] },
+        { ...BOUTIQUE_BASE, items: [{ label: 'Ma boutique', href: '/upgrade', icon: Globe }, { label: 'Devis & Commandes', href: '/sales', icon: ShoppingBag }, { label: 'QR Code boutique', href: '/upgrade', icon: QrCode, lockedPlan: 'business' }] },
         RAPPORTS, ...TAIL,
       ]
     case 'tontine':
       return [
-        { key: 'tontine', title: 'TONTINE', borderColor: 'border-violet-500', bgColor: 'bg-violet-50 dark:bg-violet-900/30', textColor: 'text-violet-700 dark:text-violet-400', headerColor: 'text-violet-600 dark:text-violet-400', defaultOpen: true, items: [{ label: 'Tontines', href: '/tontines', icon: Users }, { label: 'Membres', href: '/employees', icon: UserCog }, { label: 'Historique', href: '/activity', icon: ReceiptText }, { label: 'Dépenses', href: '/expenses', icon: Receipt }] },
-        { ...RAPPORTS, items: [{ label: 'Rapports', href: '/reports', icon: TrendingUp }, { label: 'Finances', href: '/finances', icon: DollarSign, lockedPlan: 'business' }] },
+        { key: 'tontine', title: 'TONTINE', borderColor: 'border-violet-500', bgColor: 'bg-violet-50 dark:bg-violet-900/30', textColor: 'text-violet-700 dark:text-violet-400', headerColor: 'text-violet-600 dark:text-violet-400', defaultOpen: true, items: [{ label: 'Tontines', href: '/pos', icon: Users }, { label: 'Membres', href: '/employees', icon: UserCog }, { label: 'Historique', href: '/sales', icon: ReceiptText }, { label: 'Dépenses', href: '/expenses', icon: Receipt }] },
+        { ...RAPPORTS, items: [{ label: 'Rapports', href: '/reports', icon: TrendingUp }, { label: 'Finances', href: '/reports', icon: DollarSign, lockedPlan: 'business' }] },
         ...TAIL,
       ]
     case 'rental':
       return [
-        { key: 'location', title: 'LOCATION & IMMOBILIER', borderColor: 'border-emerald-500', bgColor: 'bg-emerald-50 dark:bg-emerald-900/30', textColor: 'text-emerald-700 dark:text-emerald-400', headerColor: 'text-emerald-600 dark:text-emerald-400', defaultOpen: true, items: [{ label: 'Propriétés', href: '/real-estate', icon: Home }, { label: 'Locataires', href: '/customers', icon: Users }, { label: 'Contrats', href: '/contracts', icon: FileText }, { label: 'Dépenses', href: '/expenses', icon: Receipt }] },
-        { ...RAPPORTS, items: [{ label: 'Rapports', href: '/reports', icon: TrendingUp }, { label: 'Finances', href: '/finances', icon: DollarSign, lockedPlan: 'business' }] },
+        { key: 'location', title: 'LOCATION & IMMOBILIER', borderColor: 'border-emerald-500', bgColor: 'bg-emerald-50 dark:bg-emerald-900/30', textColor: 'text-emerald-700 dark:text-emerald-400', headerColor: 'text-emerald-600 dark:text-emerald-400', defaultOpen: true, items: [{ label: 'Propriétés', href: '/products', icon: Home }, { label: 'Locataires', href: '/customers', icon: Users }, { label: 'Contrats', href: '/sales', icon: FileText }, { label: 'Dépenses', href: '/expenses', icon: Receipt }] },
+        { ...RAPPORTS, items: [{ label: 'Rapports', href: '/reports', icon: TrendingUp }, { label: 'Finances', href: '/reports', icon: DollarSign, lockedPlan: 'business' }] },
         ...TAIL,
       ]
     case 'wholesale':
       return [
-        { key: 'caisse', title: 'CAISSE', borderColor: 'border-teal-500', bgColor: 'bg-teal-50 dark:bg-teal-900/30', textColor: 'text-teal-700 dark:text-teal-400', headerColor: 'text-teal-600 dark:text-teal-400', defaultOpen: true, items: [{ label: 'Caisse', href: '/pos', icon: ShoppingCart }, { label: 'Commandes B2B', href: '/orders', icon: ShoppingBag }, { label: 'Historique', href: '/sales', icon: ReceiptText }, { label: 'Caisse du jour', href: '/register-shifts', icon: Wallet }] },
-        { ...GESTION_BASE, items: [{ label: 'Stock', href: '/products', icon: Package }, { label: 'Clients revendeurs', href: '/customers', icon: Users }, { label: 'Fournisseurs', href: '/suppliers', icon: Truck, lockedPlan: 'business' }, { label: 'Dépenses', href: '/expenses', icon: Receipt }] },
-        { ...BOUTIQUE_BASE, items: [{ label: 'Catalogue en ligne', href: '/storefront', icon: Globe }, { label: 'Commandes en ligne', href: '/orders', icon: ShoppingBag }, { label: 'QR Code boutique', href: '/storefront/qr', icon: QrCode, lockedPlan: 'business' }] },
+        { key: 'caisse', title: 'CAISSE', borderColor: 'border-teal-500', bgColor: 'bg-teal-50 dark:bg-teal-900/30', textColor: 'text-teal-700 dark:text-teal-400', headerColor: 'text-teal-600 dark:text-teal-400', defaultOpen: true, items: [{ label: 'Caisse', href: '/pos', icon: ShoppingCart }, { label: 'Commandes B2B', href: '/sales', icon: ShoppingBag }, { label: 'Historique', href: '/sales', icon: ReceiptText }, { label: 'Caisse du jour', href: '/pos', icon: Wallet }] },
+        { ...GESTION_BASE, items: [{ label: 'Stock', href: '/products', icon: Package }, { label: 'Clients revendeurs', href: '/customers', icon: Users }, { label: 'Fournisseurs', href: '/products', icon: Truck, lockedPlan: 'business' }, { label: 'Dépenses', href: '/expenses', icon: Receipt }] },
+        { ...BOUTIQUE_BASE, items: [{ label: 'Catalogue en ligne', href: '/upgrade', icon: Globe }, { label: 'Commandes en ligne', href: '/sales', icon: ShoppingBag }, { label: 'QR Code boutique', href: '/upgrade', icon: QrCode, lockedPlan: 'business' }] },
         RAPPORTS, ...TAIL,
       ]
     case 'laundry':
       return [
-        { key: 'caisse', title: 'CAISSE', borderColor: 'border-cyan-500', bgColor: 'bg-cyan-50 dark:bg-cyan-900/30', textColor: 'text-cyan-700 dark:text-cyan-400', headerColor: 'text-cyan-600 dark:text-cyan-400', defaultOpen: true, items: [{ label: 'Caisse', href: '/pos', icon: ShoppingCart }, { label: 'En cours', href: '/active-orders', icon: Droplets }, { label: 'Historique', href: '/sales', icon: ReceiptText }, { label: 'Caisse du jour', href: '/register-shifts', icon: Wallet }] },
+        { key: 'caisse', title: 'CAISSE', borderColor: 'border-cyan-500', bgColor: 'bg-cyan-50 dark:bg-cyan-900/30', textColor: 'text-cyan-700 dark:text-cyan-400', headerColor: 'text-cyan-600 dark:text-cyan-400', defaultOpen: true, items: [{ label: 'Caisse', href: '/pos', icon: ShoppingCart }, { label: 'En cours', href: '/pos', icon: Droplets }, { label: 'Historique', href: '/sales', icon: ReceiptText }, { label: 'Caisse du jour', href: '/pos', icon: Wallet }] },
         { ...GESTION_BASE, items: [{ label: 'Tarifs', href: '/products', icon: Package }, { label: 'Clients', href: '/customers', icon: Users }, { label: 'Employés', href: '/employees', icon: UserCog, lockedPlan: 'starter' }, { label: 'Dépenses', href: '/expenses', icon: Receipt }] },
         { ...BOUTIQUE_BASE, items: BOUTIQUE_ITEMS }, RAPPORTS, ...TAIL,
       ]
@@ -268,8 +266,8 @@ function getNavSections(businessType: string): SectionConfig[] {
             { label: 'Produits', href: '/products', icon: Package },
             { label: 'Clients', href: '/customers', icon: Users },
             { label: 'Employés', href: '/employees', icon: UserCog, lockedPlan: 'starter' },
-            { label: 'Fournisseurs', href: '/suppliers', icon: Truck, lockedPlan: 'business' },
-            { label: 'Catégories', href: '/categories', icon: Tag },
+            { label: 'Fournisseurs', href: '/products', icon: Truck, lockedPlan: 'business' },
+            { label: 'Catégories', href: '/products', icon: Tag },
           ],
         },
         { ...BOUTIQUE_BASE, items: BOUTIQUE_ITEMS },

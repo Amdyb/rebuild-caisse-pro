@@ -67,8 +67,8 @@ const QUICK_LINKS = [
   { label: 'Ventes', href: '/sales', icon: ReceiptText, color: 'bg-teal-50 text-teal-600 dark:bg-teal-900/30 dark:text-teal-400' },
   { label: 'Dépenses', href: '/expenses', icon: Receipt, color: 'bg-orange-50 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400' },
   { label: 'Rapports', href: '/reports', icon: TrendingUp, color: 'bg-pink-50 text-pink-600 dark:bg-pink-900/30 dark:text-pink-400' },
-  { label: 'Boutique', href: '/storefront', icon: Globe, color: 'bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400' },
-  { label: 'Caisse', href: '/register-shifts', icon: Wallet, color: 'bg-cyan-50 text-cyan-600 dark:bg-cyan-900/30 dark:text-cyan-400' },
+  { label: 'Boutique', href: '/upgrade', icon: Globe, color: 'bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400' },
+  { label: 'Employés', href: '/employees', icon: Wallet, color: 'bg-cyan-50 text-cyan-600 dark:bg-cyan-900/30 dark:text-cyan-400' },
 ]
 
 type BusinessInfo = {
@@ -362,7 +362,7 @@ export default function DashboardPage() {
                 <Users size={28} className="text-violet-600 dark:text-violet-400" />
               </div>
               <Link
-                href="/referrals"
+                href="/upgrade"
                 className="mt-4 flex items-center justify-center gap-2 rounded-2xl border border-[var(--cp-border-strong)] py-3 text-sm font-black text-[var(--cp-text-subtle)] transition hover:bg-[var(--cp-surface-2)]"
               >
                 Inviter des amis
