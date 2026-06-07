@@ -14,6 +14,7 @@ export default function NewProductPage() {
   const [businessId, setBusinessId] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [imageFile, setImageFile] = useState<File | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
@@ -60,10 +61,11 @@ export default function NewProductPage() {
 
   async function save(e: React.FormEvent) {
     e.preventDefault()
-    if (!businessId) return
+    if (!businessId) { setError('Aucune boutique sélectionnée. Rechargez la page.'); return }
     if (!form.name.trim()) { setError('Le nom est obligatoire.'); return }
     setSaving(true)
     setError('')
+    setSuccess('')
 
     const imageUrl = await uploadImage(businessId)
 
@@ -83,9 +85,14 @@ export default function NewProductPage() {
     })
 
     setSaving(false)
-    if (insertError) { setError(insertError.message); return }
+    if (insertError) {
+      console.error('[products/new] INSERT error:', insertError)
+      setError(insertError.message)
+      return
+    }
+    setSuccess('Produit créé avec succès!')
     window.dispatchEvent(new Event('play-success'))
-    router.push('/products')
+    setTimeout(() => router.push('/products'), 1000)
   }
 
   const inputCls = 'w-full rounded-2xl border border-[var(--cp-border-strong)] bg-[var(--cp-surface-2)] px-4 py-3.5 font-semibold text-[var(--cp-text)] outline-none transition focus:border-[var(--cp-accent)] placeholder:text-[var(--cp-text-muted)]'
@@ -94,6 +101,9 @@ export default function NewProductPage() {
     <AppShell title="Nouveau produit" subtitle="Ajoutez un produit à votre catalogue."
       action={<Link href="/products" className="flex items-center gap-2 rounded-2xl border border-[var(--cp-border-strong)] px-4 py-2.5 text-sm font-black text-[var(--cp-text-subtle)] hover:bg-[var(--cp-surface-2)]"><ArrowLeft size={16} /> Retour</Link>}>
       <div className="mx-auto max-w-2xl">
+        {success && (
+          <div className="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-bold text-emerald-700 dark:border-emerald-900 dark:bg-emerald-900/20 dark:text-emerald-400">{success}</div>
+        )}
         {error && (
           <div className="mb-5 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-bold text-red-700 dark:border-red-900 dark:bg-red-900/20 dark:text-red-400">{error}</div>
         )}
