@@ -52,8 +52,11 @@ export default function EmployeesPage() {
     async function init() {
       const { data: userData } = await supabase.auth.getUser()
       if (!userData.user) { router.push('/login'); return }
-      const { data: m } = await supabase.from('business_members').select('business_id, role').eq('user_id', userData.user.id).limit(1).maybeSingle()
+      const stored = localStorage.getItem('caissepro_selected_business_id')
+      const q = supabase.from('business_members').select('business_id, role').eq('user_id', userData.user.id)
+      const { data: m } = await (stored ? q.eq('business_id', stored) : q.limit(1)).maybeSingle()
       if (!m || m.role !== 'owner') { router.replace('/dashboard'); return }
+      localStorage.setItem('caissepro_selected_business_id', m.business_id)
       setBusinessId(m.business_id)
       await load(m.business_id)
       setLoading(false)

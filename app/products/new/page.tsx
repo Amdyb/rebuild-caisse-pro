@@ -29,8 +29,15 @@ export default function NewProductPage() {
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       if (!data.user) { router.push('/login'); return }
+      const stored = localStorage.getItem('caissepro_selected_business_id')
+      if (stored) { setBusinessId(stored); return }
       supabase.from('business_members').select('business_id').eq('user_id', data.user.id).limit(1).maybeSingle()
-        .then(({ data: m }) => { if (m?.business_id) setBusinessId(m.business_id) })
+        .then(({ data: m }) => {
+          if (m?.business_id) {
+            localStorage.setItem('caissepro_selected_business_id', m.business_id)
+            setBusinessId(m.business_id)
+          }
+        })
     })
   }, [router])
 

@@ -55,8 +55,16 @@ export default function ExpensesPage() {
       const { data: userData } = await supabase.auth.getUser()
       if (!userData.user) { router.push('/login'); return }
       setUserId(userData.user.id)
+      const stored = localStorage.getItem('caissepro_selected_business_id')
+      if (stored) {
+        setBusinessId(stored)
+        await Promise.all([load(stored), loadRevenue(stored)])
+        setLoading(false)
+        return
+      }
       const { data: m } = await supabase.from('business_members').select('business_id').eq('user_id', userData.user.id).limit(1).maybeSingle()
       if (!m) { setLoading(false); return }
+      localStorage.setItem('caissepro_selected_business_id', m.business_id)
       setBusinessId(m.business_id)
       await Promise.all([load(m.business_id), loadRevenue(m.business_id)])
       setLoading(false)

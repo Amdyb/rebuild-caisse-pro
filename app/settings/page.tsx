@@ -40,10 +40,16 @@ export default function SettingsPage() {
     async function init() {
       const { data: userData } = await supabase.auth.getUser()
       if (!userData.user) { router.push('/login'); return }
-      const { data: m } = await supabase.from('business_members').select('business_id').eq('user_id', userData.user.id).limit(1).maybeSingle()
-      if (!m) { setLoading(false); return }
-      setBusinessId(m.business_id)
-      const { data: biz } = await supabase.from('businesses').select('*').eq('id', m.business_id).single()
+      const stored = localStorage.getItem('caissepro_selected_business_id')
+      let bizId = stored
+      if (!stored) {
+        const { data: m } = await supabase.from('business_members').select('business_id').eq('user_id', userData.user.id).limit(1).maybeSingle()
+        if (!m) { setLoading(false); return }
+        localStorage.setItem('caissepro_selected_business_id', m.business_id)
+        bizId = m.business_id
+      }
+      setBusinessId(bizId!)
+      const { data: biz } = await supabase.from('businesses').select('*').eq('id', bizId!).single()
       if (biz) {
         setForm({
           name: biz.name || '', phone: biz.phone || biz.business_phone || '',

@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabaseClient'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 
 export type BusinessData = {
   userId: string
@@ -11,18 +11,41 @@ export type BusinessData = {
   businessPhone: string | null
 }
 
+const SWR_KEY = 'auth:business'
+export const LS_BUSINESS_KEY = 'caissepro_selected_business_id'
+
+export function getStoredBusinessId(): string | null {
+  if (typeof window === 'undefined') return null
+  return localStorage.getItem(LS_BUSINESS_KEY)
+}
+
+export function setStoredBusinessId(id: string) {
+  if (typeof window === 'undefined') return
+  localStorage.setItem(LS_BUSINESS_KEY, id)
+  mutate(SWR_KEY)
+}
+
 async function fetchBusinessData(): Promise<BusinessData | null> {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return null
 
-  const { data: m } = await supabase
+  const storedId = getStoredBusinessId()
+
+  let q = supabase
     .from('business_members')
     .select('business_id, role, is_active, businesses(name, business_type, phone, business_phone)')
     .eq('user_id', user.id)
-    .limit(1)
-    .maybeSingle()
 
+  if (storedId) {
+    q = q.eq('business_id', storedId)
+  } else {
+    q = q.limit(1)
+  }
+
+  const { data: m } = await q.maybeSingle()
   if (!m?.business_id) return null
+
+  localStorage.setItem(LS_BUSINESS_KEY, m.business_id)
 
   const biz = (m as any).businesses
   return {
@@ -38,7 +61,7 @@ async function fetchBusinessData(): Promise<BusinessData | null> {
 
 export function useBusinessData() {
   const { data, error, isLoading } = useSWR<BusinessData | null>(
-    'auth:business',
+    SWR_KEY,
     fetchBusinessData,
     {
       dedupingInterval: 5 * 60 * 1000,
@@ -50,6 +73,7 @@ export function useBusinessData() {
   return {
     userId: data?.userId ?? null,
     businessId: data?.businessId ?? null,
+    selectedBusinessId: data?.businessId ?? getStoredBusinessId(),
     role: data?.role ?? 'owner',
     isActive: data?.isActive ?? true,
     businessName: data?.businessName ?? 'CaissePro',

@@ -145,6 +145,7 @@ export default function DashboardPage() {
 
       const businessId = member.business_id
       const memberRole: string = member.role || 'staff'
+      localStorage.setItem('caissepro_selected_business_id', businessId)
 
       const { data: businessData } = await supabase
         .from('businesses')

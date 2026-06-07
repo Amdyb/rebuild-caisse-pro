@@ -39,10 +39,12 @@ export default function UpgradePage() {
       const { data: userData } = await supabase.auth.getUser()
       if (!userData.user) { setLoading(false); return }
       setUserEmail(userData.user.email || '')
-      const { data: m } = await supabase.from('business_members')
-        .select('business_id, businesses(id, name)').eq('user_id', userData.user.id).limit(1).maybeSingle()
+      const stored = localStorage.getItem('caissepro_selected_business_id')
+      const q = supabase.from('business_members').select('business_id, businesses(id, name)').eq('user_id', userData.user.id)
+      const { data: m } = await (stored ? q.eq('business_id', stored) : q.limit(1)).maybeSingle()
       if (m) {
         const biz = (m as any).businesses
+        localStorage.setItem('caissepro_selected_business_id', m.business_id)
         setBusinessId(m.business_id)
         setBusinessName(biz?.name || '')
         const { data: sub } = await supabase.from('subscriptions').select('plan').eq('business_id', m.business_id).eq('status', 'active').order('created_at', { ascending: false }).limit(1).maybeSingle()

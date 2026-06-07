@@ -102,14 +102,20 @@ export default function ReportsPage() {
     async function init() {
       const { data: userData } = await supabase.auth.getUser()
       if (!userData.user) { router.push('/login'); return }
-      const { data: m } = await supabase.from('business_members').select('business_id').eq('user_id', userData.user.id).limit(1).maybeSingle()
-      if (!m) { setLoading(false); return }
-      setBusinessId(m.business_id)
+      const stored = localStorage.getItem('caissepro_selected_business_id')
+      let bizId = stored
+      if (!stored) {
+        const { data: m } = await supabase.from('business_members').select('business_id').eq('user_id', userData.user.id).limit(1).maybeSingle()
+        if (!m) { setLoading(false); return }
+        localStorage.setItem('caissepro_selected_business_id', m.business_id)
+        bizId = m.business_id
+      }
+      setBusinessId(bizId!)
       const [s, e, p, c] = await Promise.all([
-        supabase.from('sales').select('id,total,paid_amount,remaining_amount,payment_method,created_at').eq('business_id', m.business_id).order('created_at', { ascending: false }).limit(1000),
-        supabase.from('expenses').select('id,amount,category,expense_date').eq('business_id', m.business_id),
-        supabase.from('products').select('id,name,stock').eq('business_id', m.business_id).not('archived', 'is', true).not('is_active', 'is', false),
-        supabase.from('customers').select('id,debt_balance').eq('business_id', m.business_id),
+        supabase.from('sales').select('id,total,paid_amount,remaining_amount,payment_method,created_at').eq('business_id', bizId!).order('created_at', { ascending: false }).limit(1000),
+        supabase.from('expenses').select('id,amount,category,expense_date').eq('business_id', bizId!),
+        supabase.from('products').select('id,name,stock').eq('business_id', bizId!).not('archived', 'is', true).not('is_active', 'is', false),
+        supabase.from('customers').select('id,debt_balance').eq('business_id', bizId!),
       ])
       setSales((s.data || []) as Sale[])
       setExpenses((e.data || []) as Expense[])
