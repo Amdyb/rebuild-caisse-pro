@@ -1,6 +1,7 @@
 'use client'
 
 import AppShell from '@/components/AppShell'
+import ProductBulkImporter from '@/components/ProductBulkImporter'
 import { SkeletonGrid } from '@/components/Skeleton'
 import { useBusinessData } from '@/lib/hooks/useBusinessData'
 import { supabase } from '@/lib/supabaseClient'
@@ -10,8 +11,8 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import useSWR from 'swr'
 import {
-  Edit, Eye, ImageIcon, Package, PackagePlus, Plus, RefreshCw,
-  ScanLine, Search, Trash2, X,
+  Edit, Eye, FileSpreadsheet, ImageIcon, Package, PackagePlus, Plus, RefreshCw,
+  ScanLine, Search, Trash2, Upload, X,
 } from 'lucide-react'
 
 const BarcodeScanner = dynamic(() => import('@/components/BarcodeScanner'), { ssr: false })
@@ -71,7 +72,21 @@ export default function ProductsPage() {
   const [restockQty, setRestockQty] = useState('')
   const [restockSaving, setRestockSaving] = useState(false)
   const [showScanner, setShowScanner] = useState(false)
+  const [showImporter, setShowImporter] = useState(false)
   const [deleting, setDeleting] = useState<string | null>(null)
+
+  function downloadTemplate() {
+    const csv = 'name,prix,stock,categorie,barcode\nProduit Demo,5000,10,Alimentaire,123456789'
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'template-produits.csv'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
 
   const loading = bizLoading || productsLoading
   const isReadOnly = ['sales', 'staff', 'employee', 'cashier'].includes(role)
@@ -128,6 +143,19 @@ export default function ProductsPage() {
   const action = !isReadOnly ? (
     <div className="flex gap-2">
       <button
+        onClick={downloadTemplate}
+        title="Télécharger le modèle CSV"
+        className="flex items-center gap-1.5 rounded-2xl border border-[var(--cp-border-strong)] px-3 py-2.5 text-sm font-black text-[var(--cp-text-subtle)] hover:bg-[var(--cp-surface-2)] transition"
+      >
+        <FileSpreadsheet size={15} />
+      </button>
+      <button
+        onClick={() => setShowImporter((v) => !v)}
+        className={`flex items-center gap-1.5 rounded-2xl border px-3 py-2.5 text-sm font-black transition ${showImporter ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400' : 'border-[var(--cp-border-strong)] text-[var(--cp-text-subtle)] hover:bg-[var(--cp-surface-2)]'}`}
+      >
+        <Upload size={15} />
+      </button>
+      <button
         onClick={() => refreshProducts()}
         className="flex items-center gap-1.5 rounded-2xl border border-[var(--cp-border-strong)] px-3 py-2.5 text-sm font-black text-[var(--cp-text-subtle)] hover:bg-[var(--cp-surface-2)] transition"
       >
@@ -181,6 +209,16 @@ export default function ProductsPage() {
         {isReadOnly && (
           <div className="flex items-center gap-3 rounded-2xl border border-blue-500/30 bg-blue-500/10 px-5 py-3 text-sm font-bold text-blue-400">
             <Eye size={16} className="shrink-0" /> Mode consultation uniquement
+          </div>
+        )}
+
+        {/* Bulk importer */}
+        {showImporter && businessId && (
+          <div className="rounded-[2rem] border border-[var(--cp-border-strong)] bg-[var(--cp-surface)] p-6 shadow-sm">
+            <ProductBulkImporter
+              businessId={businessId}
+              onImported={() => { refreshProducts(); setShowImporter(false) }}
+            />
           </div>
         )}
 
